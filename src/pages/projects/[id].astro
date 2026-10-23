@@ -1,0 +1,225 @@
+---
+import { Image } from 'astro:assets';
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects');
+  return projects.map((project) => ({ params: { id: project.id }, props: { project } }));
+}
+
+const { project } = Astro.props;
+const { title, summary, date, end, context, tags, cover, coverAlt, stack, role, links } = project.data;
+const { Content } = await render(project);
+
+const month = (d: Date) => d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', timeZone: 'UTC' });
+const period = end ? `${month(date)} – ${month(end)}` : month(date);
+
+const linkItems = [
+  { href: links.site, label: 'project site' },
+  { href: links.report, label: 'report (pdf)' },
+  { href: links.code, label: 'code' },
+  { href: links.video, label: 'video' },
+  { href: links.cad, label: 'cad' },
+].filter((l) => l.href);
+
+// Widths (in columns of the 3-column title block) of the cells shown before Links,
+// so the Links cell can stretch to fill the rest of the last row.
+const COLUMNS = 3;
+const cellWidths = [1, context && 2, role && 2, tags.length > 0 && 1, stack.length > 0 && 2].filter(
+  (w): w is number => typeof w === 'number',
+);
+let col = 0;
+for (const w of cellWidths) {
+  if (col + w > COLUMNS) col = 0;
+  col = (col + w) % COLUMNS;
+}
+const linkSpan = COLUMNS - col;
+---
+
+<Base title={title} description={summary}>
+  <article class="page">
+    <a href="/projects/" class="back mono">← projects</a>
+
+    <h1>{title}</h1>
+    <p class="summary muted">{summary}</p>
+
+    {cover && <Image src={cover} alt={coverAlt} width={1400} class="cover photo" />}
+
+    <!-- Spec sheet, styled like the title block on a technical drawing -->
+    <dl class="title-block">
+      <div>
+        <dt class="label">Date</dt>
+        <dd>{period}</dd>
+      </div>
+      {context && (
+        <div class="wide">
+          <dt class="label">Context</dt>
+          <dd>{context}</dd>
+        </div>
+      )}
+      {role && (
+        <div class="wide">
+          <dt class="label">Role</dt>
+          <dd>{role}</dd>
+        </div>
+      )}
+      {tags.length > 0 && (
+        <div>
+          <dt class="label">Discipline</dt>
+          <dd>{tags.join(', ')}</dd>
+        </div>
+      )}
+      {stack.length > 0 && (
+        <div class="wide">
+          <dt class="label">Stack</dt>
+          <dd>{stack.join(' · ')}</dd>
+        </div>
+      )}
+      {linkItems.length > 0 && (
+        <div class="link-cell" style={`--span: ${linkSpan}`}>
+          <dt class="label">Links</dt>
+          <dd class="links">
+            {linkItems.map((l) => <a href={l.href}>{l.label} ↗</a>)}
+          </dd>
+        </div>
+      )}
+    </dl>
+
+    <div class="prose">
+      <Content />
+    </div>
+  </article>
+</Base>
+
+<style>
+  .page {
+    padding-top: 2.5rem;
+  }
+
+  .back {
+    font-size: 0.8rem;
+    color: var(--muted);
+    text-decoration: none;
+  }
+
+  .back:hover {
+    color: var(--text);
+  }
+
+  h1 {
+    font-size: clamp(1.7rem, 4.5vw, 2.4rem);
+    margin: 2rem 0 0.6rem;
+  }
+
+  .summary {
+    margin: 0 0 2.5rem;
+    max-width: 58ch;
+  }
+
+  .cover {
+    display: block;
+    width: 100%;
+    max-height: 75vh;
+    object-fit: contain;
+    border: 1px solid var(--line);
+  }
+
+  .title-block {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    margin: 2rem 0 3rem;
+    border: 1px solid var(--line-strong);
+    font-size: 0.9rem;
+  }
+
+  .title-block > div {
+    padding: 0.7rem 0.9rem;
+    border-right: 1px solid var(--line-strong);
+    border-bottom: 1px solid var(--line-strong);
+  }
+
+  .title-block .wide {
+    grid-column: span 2;
+  }
+
+  .title-block .link-cell {
+    grid-column: span var(--span);
+  }
+
+  .title-block dd {
+    margin: 0.2rem 0 0;
+  }
+
+  /* Trim the outer double borders */
+  .title-block {
+    border-right: 0;
+    border-bottom: 0;
+  }
+
+  .links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 1.25rem;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+  }
+
+  @media (max-width: 560px) {
+    .title-block {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .title-block .wide,
+    .title-block .link-cell {
+      grid-column: auto;
+    }
+  }
+
+  .prose :global(h2) {
+    font-size: 1.15rem;
+    margin: 2.5rem 0 0.5rem;
+  }
+
+  /* Keep tall phone photos from filling several screens */
+  .prose :global(img) {
+    display: block;
+    width: auto;
+    max-height: 32rem;
+    margin-inline: auto;
+    border: 1px solid var(--line);
+  }
+
+  .prose :global(video) {
+    display: block;
+    width: 100%;
+    max-height: 32rem;
+    border: 1px solid var(--line);
+  }
+
+  /* An italic line right after an image is its caption */
+  .prose :global(p:has(> img) + p > em:only-child) {
+    display: block;
+    text-align: center;
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+
+  .prose :global(iframe) {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border: 1px solid var(--line);
+  }
+
+  .prose :global(blockquote) {
+    margin: 0 0 2rem;
+    padding: 0.8rem 1rem;
+    border-left: 2px solid var(--line-strong);
+    color: var(--muted);
+    font-size: 0.92rem;
+  }
+
+  .prose :global(blockquote p) {
+    margin: 0;
+  }
+</style>

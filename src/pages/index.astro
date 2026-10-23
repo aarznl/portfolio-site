@@ -1,0 +1,61 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import { site } from '../site.config';
+
+const projects = (await getCollection('projects')).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+);
+const featured = projects
+  .filter((p) => p.data.featured)
+  .sort((a, b) => a.data.featured! - b.data.featured!);
+const shown = (featured.length ? featured : projects).slice(0, 3);
+---
+
+<Base>
+  <section class="intro">
+    <h1>{site.tagline}</h1>
+    <p class="muted">{site.intro}</p>
+    <p class="links mono">
+      <a href={`mailto:${site.email}`}>{site.email}</a>
+      <a href={site.linkedin}>linkedin ↗</a>
+      <a href={site.scholar}>scholar ↗</a>
+      <a href={site.github}>github ↗</a>
+      {site.resume && <a href={site.resume}>resume ↗</a>}
+      {site.cv && <a href={site.cv}>cv ↗</a>}
+    </p>
+  </section>
+
+  <section class="section">
+    <div class="section-head">
+      <h2 class="label">Selected work</h2>
+      <a href="/projects/">All projects →</a>
+    </div>
+    {shown.map((project, i) => <ProjectCard project={project} index={i} />)}
+  </section>
+</Base>
+
+<style>
+  .intro {
+    padding-top: 3.5rem;
+  }
+
+  h1 {
+    font-size: clamp(1.6rem, 4vw, 2.1rem);
+    margin: 0 0 1.25rem;
+    max-width: 26ch;
+  }
+
+  .intro p {
+    max-width: 58ch;
+    margin: 0 0 1.25rem;
+  }
+
+  .links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.5rem;
+    font-size: 0.85rem;
+  }
+</style>

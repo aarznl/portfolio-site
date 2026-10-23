@@ -1,0 +1,145 @@
+:root {
+  --bg: #ffffff;
+  --text: #0a0a0a;
+  --muted: #6e6e6e;
+  --line: #e4e4e4;
+  --line-strong: #0a0a0a;
+  --max: 760px;
+  --font-sans: 'IBM Plex Sans', system-ui, -apple-system, 'Helvetica Neue', Arial, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0a0a0a;
+    --text: #f2f2f2;
+    --muted: #8c8c8c;
+    --line: #262626;
+    --line-strong: #f2f2f2;
+    color-scheme: dark;
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.7;
+  color: var(--text);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--text);
+  color: var(--bg);
+}
+
+img,
+video,
+iframe {
+  max-width: 100%;
+  height: auto;
+}
+
+a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.22em;
+  text-decoration-color: var(--muted);
+}
+
+a:hover {
+  text-decoration-color: var(--text);
+}
+
+h1,
+h2,
+h3 {
+  font-weight: 500;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+}
+
+code,
+pre {
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+}
+
+pre {
+  padding: 1rem 1.1rem;
+  overflow-x: auto;
+  border: 1px solid var(--line);
+}
+
+hr {
+  border: 0;
+  border-top: 1px solid var(--line);
+  margin: 3rem 0;
+}
+
+.container {
+  width: 100%;
+  max-width: var(--max);
+  margin-inline: auto;
+  padding-inline: 1.5rem;
+}
+
+/* Small mono label, e.g. section headings and metadata */
+.label {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  margin: 0;
+}
+
+.muted {
+  color: var(--muted);
+}
+
+.mono {
+  font-family: var(--font-mono);
+}
+
+.section {
+  margin-top: 4.5rem;
+}
+
+.section-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid var(--line-strong);
+}
+
+.section-head a {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  text-decoration: none;
+}
+
+.section-head a:hover {
+  color: var(--text);
+}

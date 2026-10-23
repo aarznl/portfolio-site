@@ -1,0 +1,78 @@
+---
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+
+// Large featured entry for the home page: image, then title and summary.
+interface Props {
+  project: CollectionEntry<'projects'>;
+  index: number;
+}
+
+const { project, index } = Astro.props;
+const { title, summary, tags, cover, coverAlt, date } = project.data;
+---
+
+<a href={`/projects/${project.id}/`} class="feature">
+  {cover && (
+    <div class="cover">
+      <Image src={cover} alt={coverAlt} width={1200} class="photo" />
+    </div>
+  )}
+  <div class="meta">
+    <span class="label">{String(index + 1).padStart(2, '0')}</span>
+    <span class="label">{tags.join(' / ')}</span>
+    <span class="label">{date.getUTCFullYear()}</span>
+  </div>
+  <h3>{title} <span aria-hidden="true">→</span></h3>
+  <p class="muted">{summary}</p>
+</a>
+
+<style>
+  .feature {
+    display: block;
+    text-decoration: none;
+    padding-block: 2rem;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .cover {
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    margin-bottom: 1.1rem;
+  }
+
+  .cover :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .meta {
+    display: flex;
+    gap: 1.25rem;
+  }
+
+  .meta span:nth-child(2) {
+    flex: 1;
+  }
+
+  h3 {
+    margin: 0.5rem 0 0.25rem;
+    font-size: 1.2rem;
+  }
+
+  h3 span {
+    display: inline-block;
+    transition: transform 0.2s ease;
+  }
+
+  .feature:hover h3 span {
+    transform: translateX(4px);
+  }
+
+  p {
+    margin: 0;
+  }
+</style>

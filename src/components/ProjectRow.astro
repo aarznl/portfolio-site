@@ -1,0 +1,69 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+// Compact index row for the projects list: number, title, summary, year.
+interface Props {
+  project: CollectionEntry<'projects'>;
+  index: number;
+}
+
+const { project, index } = Astro.props;
+const { title, summary, tags, date } = project.data;
+---
+
+<li data-tags={tags.join(',')}>
+  <a href={`/projects/${project.id}/`} class="row">
+    <span class="num mono">{String(index + 1).padStart(2, '0')}</span>
+    <span class="text">
+      <span class="title">{title}</span>
+      <span class="summary muted">{summary}</span>
+    </span>
+    <span class="year mono">{date.getUTCFullYear()}</span>
+  </a>
+</li>
+
+<style>
+  li {
+    list-style: none;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .row {
+    display: grid;
+    grid-template-columns: 2.5rem 1fr auto;
+    gap: 1rem;
+    padding-block: 1.1rem;
+    text-decoration: none;
+    transition: padding 0.2s ease;
+  }
+
+  .row:hover {
+    padding-left: 0.5rem;
+  }
+
+  .num,
+  .year {
+    font-size: 0.8rem;
+    color: var(--muted);
+    padding-top: 0.2rem;
+  }
+
+  .text {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .title {
+    font-weight: 500;
+  }
+
+  .row:hover .title {
+    text-decoration: underline;
+    text-underline-offset: 0.22em;
+    text-decoration-thickness: 1px;
+  }
+
+  .summary {
+    font-size: 0.92rem;
+  }
+</style>
