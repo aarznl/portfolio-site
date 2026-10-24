@@ -1,4 +1,4 @@
-# Mechatronics Portfolio
+# Portfolio Site
 
 Personal portfolio built with [Astro](https://astro.build) and hosted on GitHub Pages.
 
