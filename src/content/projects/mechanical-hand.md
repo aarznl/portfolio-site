@@ -4,14 +4,13 @@ summary: A servo-driven prosthetic hand built to be coupled with an EEG.
 date: 2023-10-01
 end: 2024-06-01
 context: UCLA BMES Design Team
-tags: [medical device development, mechatronics]
+tags: [medical device development]
 cover: ../../assets/projects/mechanical-hand/01.png
 coverAlt: 3D-printed prosthetic arm
-role: Led the sub-team that built the servo actuation
 stack:
   - Arduino
   - PCA9685 servo driver
-  - 5× MG966R servo motors
+  - 5 × MG966R servo motors
   - 3D-printed parts, fishing wire
 links:
   video: https://drive.google.com/file/d/1X9exfn05t9Aq526WrX2T36pdx1t5i-Gg/view?usp=sharing

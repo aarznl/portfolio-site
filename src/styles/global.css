@@ -4,7 +4,7 @@
   --muted: #6e6e6e;
   --line: #e4e4e4;
   --line-strong: #0a0a0a;
-  --max: 760px;
+  --max: 1280px;
   --font-sans: 'IBM Plex Sans', system-ui, -apple-system, 'Helvetica Neue', Arial, sans-serif;
   --font-mono: 'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
   color-scheme: light;
@@ -96,7 +96,7 @@ hr {
   width: 100%;
   max-width: var(--max);
   margin-inline: auto;
-  padding-inline: 1.5rem;
+  padding-inline: clamp(1.25rem, 4vw, 3rem);
 }
 
 /* Small mono label, e.g. section headings and metadata */

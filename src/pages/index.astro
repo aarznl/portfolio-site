@@ -1,8 +1,10 @@
 ---
+import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 import { site } from '../site.config';
+import headshot from '../assets/about/headshot.png';
 
 const projects = (await getCollection('projects')).sort(
   (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
@@ -15,16 +17,18 @@ const shown = (featured.length ? featured : projects).slice(0, 3);
 
 <Base>
   <section class="intro">
-    <h1>{site.tagline}</h1>
-    <p class="muted">{site.intro}</p>
-    <p class="links mono">
-      <a href={`mailto:${site.email}`}>{site.email}</a>
-      <a href={site.linkedin}>linkedin ↗</a>
-      <a href={site.scholar}>scholar ↗</a>
-      <a href={site.github}>github ↗</a>
-      {site.resume && <a href={site.resume}>resume ↗</a>}
-      {site.cv && <a href={site.cv}>cv ↗</a>}
-    </p>
+    <Image src={headshot} alt={`Portrait of ${site.name}`} width={480} class="headshot" loading="eager" />
+    <div>
+      <h1>{site.tagline}</h1>
+      <p class="muted">{site.intro}</p>
+      <p class="links mono">
+        <a href={`mailto:${site.email}`}>{site.email}</a>
+        <a href={site.linkedin}>linkedin ↗</a>
+        <a href={site.scholar}>scholar ↗</a>
+        {site.resume && <a href={site.resume}>resume ↗</a>}
+        {site.cv && <a href={site.cv}>cv ↗</a>}
+      </p>
+    </div>
   </section>
 
   <section class="section">
@@ -32,30 +36,88 @@ const shown = (featured.length ? featured : projects).slice(0, 3);
       <h2 class="label">Selected work</h2>
       <a href="/projects/">All projects →</a>
     </div>
-    {shown.map((project, i) => <ProjectCard project={project} index={i} />)}
+    <div class="grid">
+      {shown.map((project, i) => <ProjectCard project={project} index={i} />)}
+    </div>
   </section>
 </Base>
 
 <style>
   .intro {
+    display: grid;
+    grid-template-columns: 18rem 1fr;
+    gap: 3rem;
+    align-items: center;
     padding-top: 3.5rem;
   }
 
+  .headshot {
+    width: 100%;
+    height: auto;
+    border-radius: 50%;
+  }
+
+  .intro > div {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    text-align: right;
+  }
+
   h1 {
-    font-size: clamp(1.6rem, 4vw, 2.1rem);
-    margin: 0 0 1.25rem;
-    max-width: 26ch;
+    font-size: clamp(1.6rem, 3.6vw, 3rem);
+    margin: 0 0 1.5rem;
+    text-wrap: balance;
   }
 
   .intro p {
-    max-width: 58ch;
+    max-width: 72ch;
     margin: 0 0 1.25rem;
+    font-size: 1.1rem;
   }
 
   .links {
     display: flex;
+    justify-content: flex-end;
     flex-wrap: wrap;
     gap: 0.5rem 1.5rem;
     font-size: 0.85rem;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0 2rem;
+  }
+
+  @media (max-width: 900px) {
+    .grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+
+  @media (max-width: 600px) {
+    .intro {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+      padding-top: 1.5rem;
+    }
+
+    .intro > div {
+      align-items: flex-start;
+      text-align: left;
+    }
+
+    .links {
+      justify-content: flex-start;
+    }
+
+    .intro p {
+      font-size: 1rem;
+    }
+
+    .headshot {
+      max-width: 8rem;
+    }
   }
 </style>

@@ -176,6 +176,12 @@ const linkSpan = COLUMNS - col;
     }
   }
 
+  .prose :global(p),
+  .prose :global(ul),
+  .prose :global(ol) {
+    max-width: 70ch;
+  }
+
   .prose :global(h2) {
     font-size: 1.15rem;
     margin: 2.5rem 0 0.5rem;

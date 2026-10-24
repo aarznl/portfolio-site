@@ -5,20 +5,26 @@ import { site } from '../site.config';
 import headshot from '../assets/about/headshot.png';
 
 // Edit these lists to match your background.
-const research = [
+// Industry and research roles together, most recent first. orgUrl is optional.
+const engineering: { title: string; org: string; orgUrl?: string; period: string; text: string }[] = [
+  {
+    title: 'Course Assistant',
+    org: 'Product Realization Lab (PRL), Stanford University',
+    period: 'Sep 2026 – Present',
+    text: 'Mentor students in the design, fabrication, and testing of hands-on engineering projects using machining, welding, additive manufacturing, laser cutting, and rapid prototyping tools, and provide technical instruction and lab support for engineering design courses.',
+  },
+  {
+    title: 'R&D Systems Verification Engineering Intern',
+    org: 'Johnson & Johnson MedTech, Santa Clara, CA',
+    period: 'Jun 2026 – Sep 2026',
+    text: 'Supported development and execution of verification testing for the OTTAVA Surgical Robotic System. Developed a Python/YAML automated configuration-management tool for a distributed robotic system, with a pytest-based validation framework covering 25+ automated test cases, and designed and prototyped robotic test fixtures in SolidWorks for system-level verification testing.',
+  },
   {
     title: 'Haptic Feedback for Robotic Surgery',
     org: 'UCLA Center for Advanced Surgical & Interventional Technology (CASIT), Dr. Rory Geoghegan',
     orgUrl: 'https://www.uclahealth.org/departments/surgery/casit',
-    period: 'Mar 2023 – May 2025',
+    period: 'Mar 2024 – Jun 2025',
     text: 'Incorporated fiber Bragg grating (FBG) sensing into surgical forceps to detect tissue stiffness, giving surgeons haptic feedback during robotic surgery on the da Vinci Si. I created the FBG sensor manufacturing protocol (PDMS, 3D-printed molds, and epoxy), gathered grasping data on a custom bench-top rig with optical encoders, and found a way past the da Vinci’s magnetic and inductive barriers so our custom forceps could be used in human-operated experiments. Co-first author on the poster “Characterizing Robotic Surgery Instrument Kinematics When Under Human Control” at UCLA Bioengineering Research Day 2024.',
-  },
-  {
-    title: 'Deep Learning for Knee MRI Segmentation',
-    org: 'UCLA Magnetic Resonance Research Labs, Dr. Holden Wu',
-    orgUrl: 'https://mrrl.ucla.edu/pages/',
-    period: 'Sept 2024 – March 2025',
-    text: 'Bioengineering capstone project building deep learning models (U-Net, Attention U-Net, and R2U-Net) to segment knee cartilage in quantitative DESS MRIs from the Stanford SKM-TEA dataset, so that segmentations could be paired with T2 maps to detect early cartilage degeneration.',
   },
   {
     title: 'Magnetoelastic Generators for Wearable Bioelectronics',
@@ -26,6 +32,12 @@ const research = [
     orgUrl: 'https://www.junchenlab.com/',
     period: 'Oct 2022 – Oct 2024',
     text: 'Fabricated soft and liquid magnetoelastic generator (MEG) sensors from PDMS and NdFeB nanomagnets, and helped design a new 3D-printing method for manufacturing them. Tested sensor output for prosthetics feedback, voice recognition, and ambulatory cardiac monitoring, and presented at the UC Systemwide Bioengineering Symposium and UCLA Undergraduate Research Week in 2023.',
+  },
+  {
+    title: 'R&D Systems Engineering Intern',
+    org: 'Johnson & Johnson MedTech (Shockwave Medical), Santa Clara, CA',
+    period: 'Jun 2024 – Aug 2024',
+    text: 'Created and performed product testing for Class II & III medical devices within the Product Development Process. Executed device qualification for verification & validation testing through failure analysis of prototype builds, and implemented an automated defect management analysis tool for device requirements that reduced workload by 50%.',
   },
 ];
 
@@ -44,25 +56,25 @@ const publications = [
 
 const experience = [
   {
-    title: 'Build Team Project Manager, UCLA BMES',
-    period: 'Mar 2024 – Jun 2024',
-    text: 'Led undergraduates in building their own pulse oximeters, teaching coding, circuits, CAD, PCB design, and soldering through weekly workshops and a course website. Managed over $1,500 in materials funding. Our poster won Best Introductory Poster Presentation at the BMES Technical Projects Symposium 2024.',
+    title: 'Technical Project Manager, UCLA BMES',
+    period: 'Mar 2024 – Jun 2025',
+    text: 'Led 40+ students across different projects focused on smart wearable technology and medical devices.',
     url: 'https://bmesbuildteamucla.github.io/',
   },
   {
     title: 'Youth Mentorship Director, China Care Bruins',
-    period: 'Sep 2021 – Present',
-    text: 'Design and lead activities for 6th to 8th grade mentees in an organization that mentors youth adoptees from China in the LA area, fundraises for orphanages, and educates others about adoption.',
-  },
-  {
-    title: 'Co-founder & Director, O-Chem Tutoring at UCLA',
-    period: 'Jan 2023 – Mar 2024',
-    text: 'Co-founded a free, student-run tutoring program for organic chemistry. Designed open-access worksheets and led weekly workshops of up to 30 students as the club grew to recruit more tutors and board directors.',
+    period: 'Sep 2021 – Jun 2025',
+    text: 'Design and lead activities for international youth adoptees in the LA area while also fundraising for orphanages and raising awareness about adoption.',
   },
   {
     title: 'Course Grader, UCLA Life Sciences Core Education',
     period: 'Oct 2022 – Apr 2025',
     text: 'Graded homework and coding labs for LS 30A & 30B: Mathematics for Life Scientists, working with professors and TAs to improve student learning.',
+  },
+  {
+    title: 'Co-founder & Director, O-Chem Tutoring at UCLA',
+    period: 'Jan 2023 – Mar 2024',
+    text: 'Co-founded a free, student-run tutoring program for organic chemistry. Designed open-access worksheets and led weekly workshops of up to 30 students as the club grew to recruit more tutors and board directors.',
   },
   {
     title: 'Sustainability Volunteer, UCLA Alternative Breaks',
@@ -72,17 +84,17 @@ const experience = [
 ];
 
 const skills = [
-  { group: 'CAD', items: ['Autodesk Fusion 360', 'SOLIDWORKS', 'Generative design'] },
+  { group: 'CAD', items: ['Autodesk Fusion 360', 'SOLIDWORKS', 'Onshape', 'Generative design'] },
   { group: 'Fabrication', items: ['FDM & SLA printing', 'TIG welding', 'Sand casting', 'Milling', 'Laser cutting', 'Woodworking'] },
   { group: 'Electrical', items: ['Analog sensing circuits', 'EAGLE PCB design', 'Soldering', 'Arduino', 'Servo control'] },
-  { group: 'Software', items: ['React / JavaScript', 'Processing', 'Deep learning (U-Net segmentation)'] },
+  { group: 'Software', items: ['C/C++','Python', 'MATLAB'] },
 ];
 ---
 
 <Base title="About" description={`About ${site.name}`}>
   <section class="page">
     <div class="intro">
-      <Image src={headshot} alt={`Portrait of ${site.name}`} width={320} class="headshot" />
+      <Image src={headshot} alt={`Portrait of ${site.name}`} width={520} class="headshot" />
       <div>
         <h1>About</h1>
         <div class="prose">
@@ -104,22 +116,35 @@ const skills = [
           {site.cv && <a href={site.cv}>cv ↗</a>}
           <a href={site.linkedin}>linkedin ↗</a>
           <a href={site.scholar}>scholar ↗</a>
-          <a href={site.github}>github ↗</a>
         </p>
       </div>
     </div>
 
     <div class="section">
       <div class="section-head">
-        <h2 class="label">Research</h2>
+        <h2 class="label">Skills</h2>
       </div>
       <dl class="entries">
-        {research.map((r) => (
+        {skills.map((s) => (
+          <div>
+            <dt class="label">{s.group}</dt>
+            <dd>{s.items.join(', ')}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+
+    <div class="section">
+      <div class="section-head">
+        <h2 class="label">Engineering experience</h2>
+      </div>
+      <dl class="entries">
+        {engineering.map((r) => (
           <div>
             <dt class="label">{r.period}</dt>
             <dd>
               <h3>{r.title}</h3>
-              <p class="muted org"><a href={r.orgUrl}>{r.org}</a></p>
+              <p class="muted org">{r.orgUrl ? <a href={r.orgUrl}>{r.org}</a> : r.org}</p>
               <p>{r.text}</p>
             </dd>
           </div>
@@ -159,20 +184,6 @@ const skills = [
         ))}
       </dl>
     </div>
-
-    <div class="section">
-      <div class="section-head">
-        <h2 class="label">Skills</h2>
-      </div>
-      <dl class="entries">
-        {skills.map((s) => (
-          <div>
-            <dt class="label">{s.group}</dt>
-            <dd>{s.items.join(', ')}</dd>
-          </div>
-        ))}
-      </dl>
-    </div>
   </section>
 </Base>
 
@@ -183,12 +194,13 @@ const skills = [
 
   .intro {
     display: grid;
-    grid-template-columns: 9rem 1fr;
-    gap: 2rem;
+    grid-template-columns: 1fr 14rem;
+    gap: 3rem;
     align-items: start;
   }
 
   .headshot {
+    order: 1;
     width: 100%;
     height: auto;
     border-radius: 50%;
@@ -197,10 +209,6 @@ const skills = [
   h1 {
     font-size: clamp(1.6rem, 4vw, 2.1rem);
     margin: 0 0 1.25rem;
-  }
-
-  .prose {
-    max-width: 60ch;
   }
 
   .links {
@@ -238,7 +246,6 @@ const skills = [
 
   .entries p {
     margin: 0.35rem 0 0;
-    max-width: 62ch;
   }
 
   .entries .org {
@@ -253,6 +260,7 @@ const skills = [
     }
 
     .headshot {
+      order: 0;
       max-width: 8rem;
     }
 

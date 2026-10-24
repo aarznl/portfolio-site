@@ -7,10 +7,9 @@ context: "UCLA E96G: Go-Karts"
 tags: [design and manufacturing]
 cover: ../../assets/projects/go-kart/04.jpg
 coverAlt: Final assembly of the go-kart
-role: Team of 6. I designed the braking system
 stack:
   - SOLIDWORKS
-  - T-slot rails
+  - T-slot rail frame
   - Electric scooter wheels
   - 3D-printed components
 ---

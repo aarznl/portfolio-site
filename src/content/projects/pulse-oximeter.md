@@ -7,7 +7,6 @@ context: UCLA BMES Build Team
 tags: [medical device development]
 cover: ../../assets/projects/pulse-oximeter/08.jpg
 coverAlt: Completed pulse oximeter in a 3D-printed Poké Ball case
-role: Team of 4
 stack:
   - Arduino Nano
   - MCP6041 op-amps
